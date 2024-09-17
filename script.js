@@ -4,10 +4,10 @@ const ctx = mycanvas.getContext('2d');
 let bombas = [];
 let obstaculos = [];
 let pared = [];
-
+let puntuacion = 0;
 const tamano = 40;
-let x = 0;
-let y = 0;
+let x = 40;
+let y = 40;
 let velocidad = tamano;
 let direccion = "";
 
@@ -39,7 +39,26 @@ class Rectangulo {
 
 let jugador = new Rectangulo(x, y, tamano, tamano, jugadorImg);
 
+function borde() {
+    for (let x = 0; x < mycanvas.width; x += tamano) {
+        
+        pared.push(new Rectangulo(x, 0, tamano, tamano, paredImg));
+      
+        pared.push(new Rectangulo(x, mycanvas.height - tamano, tamano, tamano, paredImg));
+    }
+
+    
+    for (let y = 0; y < mycanvas.height; y += tamano) {
+        
+        pared.push(new Rectangulo(0, y, tamano, tamano, paredImg));
+       
+        pared.push(new Rectangulo(mycanvas.width - tamano, y, tamano, tamano, paredImg));
+    }
+
+}
+
 function paredes() {
+    borde();
     const espacioPared = tamano * 3;
     const tamanoPared = tamano;
 
@@ -51,7 +70,7 @@ function paredes() {
         }
     }
 
-    obstaculos = obstaculosAleatorios(350, true);
+    obstaculos = obstaculosAleatorios(300, true);
 }
 
 function obstaculosAleatorios(contador, posJugador) {
@@ -102,6 +121,7 @@ function explotarBomba(ponerUnaBomba) {
 
     obstaculos = obstaculos.filter(obstaculo => {
         if (verificarColision(obstaculo, bomba)) {
+            puntuacion += 10;
             return false;
         }
         return true;
@@ -197,16 +217,16 @@ function pintar() {
     ctx.drawImage(fondo, 0, 0, mycanvas.width, mycanvas.height);
 
 
-    pared.forEach(pared => {
-        ctx.drawImage(pared.c, pared.x, pared.y, pared.w, pared.h);
-    });
+   
 
 
     obstaculos.forEach(obstaculo => {
         ctx.fillStyle = "black";
         ctx.fillRect(obstaculo.x, obstaculo.y, obstaculo.size, obstaculo.size);
     });
-
+ pared.forEach(pared => {
+        ctx.drawImage(pared.c, pared.x, pared.y, pared.w, pared.h);
+    });
 
     bombas.forEach(bomba => {
         ctx.fillStyle = "red";
@@ -220,6 +240,8 @@ function pintar() {
     });
 
     ctx.drawImage(jugador.c, jugador.x, jugador.y, jugador.w, jugador.h);
+
+   
 
     requestAnimationFrame(pintar);
 }
