@@ -21,6 +21,9 @@ const paredImg = new Image();
 paredImg.src = "pared.webp";
 const bombaImg = new Image();
 bombaImg.src = "bomba.webp";
+const obstaculoImg = new Image();
+obstaculoImg.src = "obstaculo.jpg";
+const explosionSound = new Audio('explosion.mp3');
 class Rectangulo {
     constructor(x, y, w, h, c) {
         this.x = x;
@@ -111,8 +114,8 @@ function ponerBomba() {
 
 function explotarBomba(ponerUnaBomba) {
     let bomba = bombas[ponerUnaBomba];
-
-
+    explosionSound.currentTime = 0;
+    explosionSound.play();
     ctx.fillStyle = 'orange';
     ctx.fillRect(bomba.x - tamano, bomba.y, tamano * 3, tamano);
 
@@ -222,8 +225,8 @@ function pintar() {
 
 
     obstaculos.forEach(obstaculo => {
-        ctx.fillStyle = "black";
-        ctx.fillRect(obstaculo.x, obstaculo.y, obstaculo.size, obstaculo.size);
+        
+        ctx.drawImage(obstaculoImg,obstaculo.x, obstaculo.y, obstaculo.size, obstaculo.size);
     });
  pared.forEach(pared => {
         ctx.drawImage(pared.c, pared.x, pared.y, pared.w, pared.h);
