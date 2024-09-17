@@ -10,7 +10,7 @@ let x = 40;
 let y = 40;
 let velocidad = tamano;
 let direccion = "";
-let segundos = 10;
+let segundos = 120;
 let pausado = false;
 const filas = mycanvas.height / tamano;
 const columnas = mycanvas.width / tamano;
@@ -26,7 +26,10 @@ const obstaculoImg = new Image();
 obstaculoImg.src = "obstaculo.jpg";
 const ganoImg = new Image();
 ganoImg.src = "gano2.jpg"
+const perdioImg = new Image();
+perdioImg.src = "perdio.webp";
 const explosionSound = new Audio('explosion.mp3');
+const musicaFondo = new Audio('fondo.mp3');
 class Rectangulo {
     constructor(x, y, w, h, c) {
         this.x = x;
@@ -238,12 +241,9 @@ document.addEventListener("keydown", function (e) {
 });
 
 function pintar() {
+    musicaFondo.play();
     ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
     ctx.drawImage(fondo, 0, 0, mycanvas.width, mycanvas.height);
-
-
-
-
 
     obstaculos.forEach(obstaculo => {
 
@@ -273,7 +273,7 @@ function pintar() {
     ctx.fillText("Tiempo: " + segundos, 500, 30);
 
     if (pausado) {
-        ctx.drawImage(ganoImg, 0, 0, mycanvas.width, mycanvas.height);
+        ctx.drawImage(perdioImg, 0, 0, mycanvas.width, mycanvas.height);
         return; 
     }
     if (puntuacion >= 3000) {
