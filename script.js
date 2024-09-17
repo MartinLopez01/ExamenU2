@@ -16,10 +16,11 @@ const columnas = mycanvas.width / tamano;
 const fondo = new Image();
 fondo.src = "fondo.jpg";
 const jugadorImg = new Image();
-jugadorImg.src = "Bob.webp";
+jugadorImg.src = "jugador.webp";
 const paredImg = new Image();
 paredImg.src = "pared.webp";
-
+const bombaImg = new Image();
+bombaImg.src = "bomba.webp";
 class Rectangulo {
     constructor(x, y, w, h, c) {
         this.x = x;
