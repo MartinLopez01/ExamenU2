@@ -14,4 +14,5 @@ ctx2.fillText("Abajo: S " , 10, 230);
 ctx2.fillText("Izquierda: A " , 10, 260); 
 ctx2.fillText("Derecha: D" , 10, 290); 
 ctx2.fillText("Poner bomba: ESPACIO" , 10, 320); 
-ctx2.fillText("NO HAY PAUSA XDD" , 10, 350); 
+ctx2.fillText("Reiniciar: F5" , 10, 350); 
+ctx2.fillText("NO HAY PAUSA XDD" , 10, 380); 
