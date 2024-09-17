@@ -230,9 +230,7 @@ function pintar() {
     });
 
     bombas.forEach(bomba => {
-        ctx.fillStyle = "red";
-        ctx.fillRect(bomba.x, bomba.y, tamano, tamano);
-
+        ctx.drawImage(bombaImg, bomba.x, bomba.y, tamano, tamano);
 
         bomba.timer -= 0.05;
         if (bomba.timer <= 0) {
