@@ -125,8 +125,8 @@ function pintar() {
     ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
     ctx.drawImage(fondo, 0, 0, mycanvas.width, mycanvas.height);
    
-    pared.forEach(wall => {
-        ctx.drawImage(wall.c, wall.x, wall.y, wall.w, wall.h);
+    pared.forEach(pared => {
+        ctx.drawImage(pared.c, pared.x, pared.y, pared.w, pared.h);
     });
 
     obstaculos.forEach(obstaculo => {
