@@ -10,7 +10,8 @@ let x = 40;
 let y = 40;
 let velocidad = tamano;
 let direccion = "";
-
+let segundos = 10;
+let pausado = false;
 const filas = mycanvas.height / tamano;
 const columnas = mycanvas.width / tamano;
 const fondo = new Image();
@@ -23,6 +24,8 @@ const bombaImg = new Image();
 bombaImg.src = "bomba.webp";
 const obstaculoImg = new Image();
 obstaculoImg.src = "obstaculo.jpg";
+const ganoImg = new Image();
+ganoImg.src = "gano2.jpg"
 const explosionSound = new Audio('explosion.mp3');
 class Rectangulo {
     constructor(x, y, w, h, c) {
@@ -45,17 +48,17 @@ let jugador = new Rectangulo(x, y, tamano, tamano, jugadorImg);
 
 function borde() {
     for (let x = 0; x < mycanvas.width; x += tamano) {
-        
+
         pared.push(new Rectangulo(x, 0, tamano, tamano, paredImg));
-      
+
         pared.push(new Rectangulo(x, mycanvas.height - tamano, tamano, tamano, paredImg));
     }
 
-    
+
     for (let y = 0; y < mycanvas.height; y += tamano) {
-        
+
         pared.push(new Rectangulo(0, y, tamano, tamano, paredImg));
-       
+
         pared.push(new Rectangulo(mycanvas.width - tamano, y, tamano, tamano, paredImg));
     }
 
@@ -172,6 +175,24 @@ function puedeMover(x, y) {
     return true;
 }
 
+function temporizador() {
+  
+    const intervalo = setInterval(() => {
+        if (!pausado) { 
+            segundos--;
+            console.log(`Quedan ${segundos} segundos`);
+    
+            if (segundos === 0) {
+                clearInterval(intervalo);
+                console.log("¡Tiempo terminado!");
+                pausado = true; 
+            }
+        }
+    }, 1000);
+  }
+  
+ 
+  
 document.addEventListener("keydown", function (e) {
     switch (e.keyCode) {
         case 87:
@@ -221,14 +242,14 @@ function pintar() {
     ctx.drawImage(fondo, 0, 0, mycanvas.width, mycanvas.height);
 
 
-   
+
 
 
     obstaculos.forEach(obstaculo => {
-        
-        ctx.drawImage(obstaculoImg,obstaculo.x, obstaculo.y, obstaculo.size, obstaculo.size);
+
+        ctx.drawImage(obstaculoImg, obstaculo.x, obstaculo.y, obstaculo.size, obstaculo.size);
     });
- pared.forEach(pared => {
+    pared.forEach(pared => {
         ctx.drawImage(pared.c, pared.x, pared.y, pared.w, pared.h);
     });
 
@@ -243,10 +264,24 @@ function pintar() {
 
     ctx.drawImage(jugador.c, jugador.x, jugador.y, jugador.w, jugador.h);
 
-   
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Puntuación: " + puntuacion, 10, 30);
 
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Tiempo: " + segundos, 500, 30);
+
+    if (pausado) {
+        ctx.drawImage(ganoImg, 0, 0, mycanvas.width, mycanvas.height);
+        return; 
+    }
+    if (puntuacion >= 3000) {
+
+        ctx.drawImage(ganoImg, 0, 0, mycanvas.width, mycanvas.height);
+    }
     requestAnimationFrame(pintar);
 }
-
+temporizador();
 paredes();
 pintar();
